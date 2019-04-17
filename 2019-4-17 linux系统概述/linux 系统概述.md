@@ -308,3 +308,84 @@ chmod g+w file # 向file的文件权限中加入用户组可写权限
 注意WSL(兼容linux内核)和linux虚拟机中的内核其实是不一致的(对于那些需要Linux内核的服务)，所以会不会对后续有影响，待解决？
 
 ![](pic/uname.png)
+
+其他相关命令：
+
+	arch 显示机器的处理器架构(1) 
+	uname -m 显示机器的处理器架构(2) 
+	uname -r 显示正在使用的内核版本 
+	pwd 显示工作路径 
+	cp dir/* . 复制一个目录下的所有文件到当前工作目录 
+	ln -s file1 lnk1 创建一个指向文件或目录的软链接 
+	ln file1 lnk1 创建一个指向文件或目录的物理链接 
+	最常用用法：touch fileA
+	如果fileA存在，使用touch指令可更改这个文件或目录的日期时间，包括存取时间和更改时间；
+	如果fileA不存在，touch指令会在当前目录下新建一个空白文件fileA。
+
+## man +shell命令/函数=帮助 ##
+
+## 用户和群组 ##
+    groupadd group_name 创建一个新用户组 
+    groupdel group_name 删除一个用户组 
+    groupmod -n new_group_name old_group_name 重命名一个用户组 
+    useradd -c "Name Surname " -g admin -d /home/user1 -s /bin/bash user1 创建一个属于 "admin" 用户组的用户 
+    useradd user1 创建一个新用户 
+    userdel -r user1 删除一个用户 ( '-r' 排除主目录) 
+    usermod -c "User FTP" -g system -d /ftp/user1 -s /bin/nologin user1 修改用户属性 
+    passwd 修改口令 
+    passwd user1 修改一个用户的口令 (只允许root执行) 
+    chage -E 2005-12-31 user1 设置用户口令的失效期限 
+    pwck 检查 '/etc/passwd' 的文件格式和语法修正以及存在的用户 
+    grpck 检查 '/etc/passwd' 的文件格式和语法修正以及存在的群组 
+    newgrp group_name 登陆进一个新的群组以改变新创建文件的预设群组 
+
+## 查看文件内容  ##
+    cat file1 从第一个字节开始正向查看文件的内容 
+    tac file1 从最后一行开始反向查看一个文件的内容 
+    more file1 查看一个长文件的内容 
+    less file1 类似于 'more' 命令，但是它允许在文件中和正向操作一样的反向操作 
+    head -2 file1 查看一个文件的前两行 
+    tail -2 file1 查看一个文件的最后两行 
+    tail -f /var/log/messages 实时查看被添加到一个文件中的内容 
+    cat file1 file2 ... | command <> file1_in.txt_or_file1_out.txt general syntax for text manipulation using PIPE, STDIN and STDOUT 
+    cat file1 | command( sed, grep, awk, grep, etc...) > result.txt 合并一个文件的详细说明文本，并将简介写入一个新文件中 
+    cat file1 | command( sed, grep, awk, grep, etc...) >> result.txt 合并一个文件的详细说明文本，并将简介写入一个已有的文件中 
+    grep Aug /var/log/messages 在文件 '/var/log/messages'中查找关键词"Aug" 
+    grep ^Aug /var/log/messages 在文件 '/var/log/messages'中查找以"Aug"开始的词汇 
+    grep [0-9] /var/log/messages 选择 '/var/log/messages' 文件中所有包含数字的行 
+    grep Aug -R /var/log/* 在目录 '/var/log' 及随后的目录中搜索字符串"Aug" 
+    sed 's/stringa1/stringa2/g' example.txt 将example.txt文件中的 "string1" 替换成 "string2" 
+    sed '/^$/d' example.txt 从example.txt文件中删除所有空白行 
+    sed '/ *#/d; /^$/d' example.txt 从example.txt文件中删除所有注释和空白行 
+    echo 'esempio' | tr '[:lower:]' '[:upper:]' 合并上下单元格内容 
+    sed -e '1d' result.txt 从文件example.txt 中排除第一行 
+    sed -n '/stringa1/p' 查看只包含词汇 "string1"的行 
+    sed -e 's/ *$//' example.txt 删除每一行最后的空白字符 
+    sed -e 's/stringa1//g' example.txt 从文档中只删除词汇 "string1" 并保留剩余全部 
+    sed -n '1,5p;5q' example.txt 查看从第一行到第5行内容 
+    sed -n '5p;5q' example.txt 查看第5行 
+    sed -e 's/00*/0/g' example.txt 用单个零替换多个零 
+    cat -n file1 标示文件的行数 
+    cat example.txt | awk 'NR%2==1' 删除example.txt文件中的所有偶数行 
+    echo a b c | awk '{print $1}' 查看一行第一栏 
+    echo a b c | awk '{print $1,$3}' 查看一行的第一和第三栏 
+    paste file1 file2 合并两个文件或两栏的内容 
+    paste -d '+' file1 file2 合并两个文件或两栏的内容，中间用"+"区分 
+    sort file1 file2 排序两个文件的内容 
+    sort file1 file2 | uniq 取出两个文件的并集(重复的行只保留一份) 
+    sort file1 file2 | uniq -u 删除交集，留下其他的行 
+    sort file1 file2 | uniq -d 取出两个文件的交集(只留下同时存在于两个文件中的文件) 
+    comm -1 file1 file2 比较两个文件的内容只删除 'file1' 所包含的内容 
+    comm -2 file1 file2 比较两个文件的内容只删除 'file2' 所包含的内容 
+    comm -3 file1 file2 比较两个文件的内容只删除两个文件共有的部分 
+
+## 网络 - （以太网和WIFI无线） ##
+	基本ifconfig
+    ifconfig eth0 显示一个以太网卡的配置 
+    ifup eth0 启用一个 'eth0' 网络设备 
+    ifdown eth0 禁用一个 'eth0' 网络设备 
+    ifconfig eth0 192.168.1.1 netmask 255.255.255.0 控制IP地址 
+    ifconfig eth0 promisc 设置 'eth0' 成混杂模式以嗅探数据包 (sniffing) 
+    dhclient eth0 以dhcp模式启用 'eth0' 
+    route -n show routing table 
+    route add -net 0/0 gw IP_Gateway configura default gateway 
