@@ -77,7 +77,7 @@ exit退出当前权限返回上一层权限
     -newer file : 列出比file还要新的文件名
     # 例如：
     find ./ -mtime 0 # 在当前目录下查找今天之内有改动的文件
-     
+    find / -name httpd.*　　#在根目录下查找文件httpd.*，表示在整个硬盘查找
 ![](pic/find1.png)
 
     # 与用户或用户组名有关的参数：
